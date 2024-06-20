@@ -1,15 +1,16 @@
 <?php session_start();
 error_reporting(0);
-include  'include/config.php'; 
-if (strlen($_SESSION['adminid']==0)) {
+include  'include/config.php';
+if (strlen($_SESSION['adminid'] == 0)) {
   header('location:logout.php');
-  } else{
+} else {
 ?>
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
+
   <head>
     <meta name="description" content="Vali is a">
-   <title>Admin | New Bookings</title>
+    <title>Admin | New Bookings</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,16 +19,17 @@ if (strlen($_SESSION['adminid']==0)) {
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
+
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
-   <?php include 'include/header.php'; ?>
+    <?php include 'include/header.php'; ?>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <?php include 'include/sidebar.php'; ?>
     <main class="app-content">
-     
-      
-       <div class="row">
+
+
+      <div class="row">
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-body">
@@ -37,57 +39,57 @@ if (strlen($_SESSION['adminid']==0)) {
                 <thead>
                   <tr>
                     <th>Sr.No</th>
-        <th>bookingid</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>bookingdate</th>
-                <th>PackageName</th>
-        <th>Title</th>
-     
+                    <th>bookingid</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>bookingdate</th>
+                    <th>PackageName</th>
+                    <th>Title</th>
 
-        <th>Action</th>
-                    
+
+                    <th>Action</th>
+
                   </tr>
                 </thead>
-               <?php
-                  $sql="SELECT t1.id as bookingid,t3.fname as Name, t3.email as email,t1.booking_date as bookingdate,t2.titlename as title,t2.PackageDuratiobn as PackageDuratiobn,
-t2.Price as Price,t2.Description as Description,t4.category_name as category_name,t5.PackageName as PackageName FROM tblbooking as t1
- join tbladdpackage as t2
-on t1.package_id =t2.id
-join tbluser as t3
-on t1.userid=t3.id
-join tblcategory as t4
-on t2.category=t4.id
-join tblpackage as t5
-on t2.PackageType=t5.id where t1.paymentType is null || t1.paymentType=''";
-                  $query= $dbh->prepare($sql);
-                  $query-> execute();
-                  $results = $query -> fetchAll(PDO::FETCH_OBJ);
-                  $cnt=1;
-                  if($query -> rowCount() > 0)
-                  {
-                  foreach($results as $result)
-                  {
-                  ?>
+                <?php
+                $sql = "SELECT t1.id as bookingid,t3.fname as Name, t3.email as email,t1.booking_date as bookingdate,t2.titlename as title,t2.PackageDuration as PackageDuration,
+                t2.Price as Price,t2.Description as Description,t4.category_name as category_name,t5.PackageName as PackageName FROM tblbooking as t1
+                join tbladdpackage as t2
+                on t1.package_id =t2.id
+                join tbluser as t3
+                on t1.userid=t3.id
+                join tblcategory as t4
+                on t2.category=t4.id
+                join tblpackage as t5
+                on t2.PackageType=t5.id where t1.paymentType is null || t1.paymentType=''";
+                $query = $dbh->prepare($sql);
+                $query->execute();
+                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                $cnt = 1;
+                if ($query->rowCount() > 0) {
+                  foreach ($results as $result) {
+                ?>
 
-                <tbody>
-                  <tr>
-                    <td><?php echo($cnt);?></td>
-                    <td ><?php echo htmlentities($result->bookingid);?></td>
-                    <td><?php echo htmlentities($result->Name);?></td>
-                    <td><?php echo htmlentities($result->email);?></td>
-                    <td><?php echo htmlentities($result->bookingdate);?></td>
-                      <td><?php echo htmlentities($result->PackageName);?></td>
-                    <td ><?php echo htmlentities($result->title);?></td>
-            
-                  
-                     <td>
-                      <a href="booking-history-details.php?bookingid=<?php echo htmlentities($result->bookingid);?>"><button class="btn btn-primary" type="button">View</button></a> 
-                     </td>
-                  </tr>
-                    <?php  $cnt=$cnt+1; } } ?>
-              
-                </tbody>
+                    <tbody>
+                      <tr>
+                        <td><?php echo ($cnt); ?></td>
+                        <td><?php echo htmlentities($result->bookingid); ?></td>
+                        <td><?php echo htmlentities($result->Name); ?></td>
+                        <td><?php echo htmlentities($result->email); ?></td>
+                        <td><?php echo htmlentities($result->bookingdate); ?></td>
+                        <td><?php echo htmlentities($result->PackageName); ?></td>
+                        <td><?php echo htmlentities($result->title); ?></td>
+
+
+                        <td>
+                          <a href="booking-history-details.php?bookingid=<?php echo htmlentities($result->bookingid); ?>"><button class="btn btn-primary" type="button">View</button></a>
+                        </td>
+                      </tr>
+                  <?php $cnt = $cnt + 1;
+                  }
+                } ?>
+
+                    </tbody>
               </table>
             </div>
           </div>
@@ -95,7 +97,7 @@ on t2.PackageType=t5.id where t1.paymentType is null || t1.paymentType=''";
       </div>
     </main>
     <!-- Essential javascripts for application to work-->
-     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
@@ -105,7 +107,10 @@ on t2.PackageType=t5.id where t1.paymentType is null || t1.paymentType=''";
     <!-- Data table plugin-->
     <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript">
+      $('#sampleTable').DataTable();
+    </script>
   </body>
-</html>
+
+  </html>
 <?php } ?>

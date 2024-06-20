@@ -107,7 +107,6 @@ foreach($results as $result)
 							<!-- <a href="#" class="site-btn sb-line-gradient">Booking Now</a> -->
 							 <form method='post'>
                             <input type='hidden' name='pid' value='<?php echo htmlentities($result->id);?>'>
-                          
 
                         <input class='site-btn sb-line-gradient' type='submit' name='submit' value='Booking Now' onclick="return confirm('Do you really want to book this package.');"> 
                         </form> 

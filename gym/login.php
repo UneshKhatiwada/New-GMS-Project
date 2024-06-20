@@ -92,7 +92,7 @@ if(isset($_POST['submit'])) {
 							<p>Login</p>
 						</div>
 						 <?php if($error){?><div class="errorWrap" style="color:red;"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } 
-                else if($msg){?><div class="succWrap" style="color:red;"><strong>Error</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
+                         else if($msg){?><div class="succWrap" style="color:red;"><strong>Error</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
 
 						<form class="singup-form contact-form" method="post">
 						<div class="row">
