@@ -20,10 +20,10 @@ if (strlen($_SESSION['adminid']==0)) {
   </head>
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
-    <?php include 'include/header.php'; ?>
+    <?php include './include/header.php'; ?>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    <?php include 'include/sidebar.php'; ?>
+    <?php include './include/sidebar.php'; ?>
     <main class="app-content">
       <div class="app-title">
         <div>
@@ -64,7 +64,7 @@ if (strlen($_SESSION['adminid']==0)) {
                   foreach($results as $result)
                   {
                   ?>
-                       <a href="add-package.php">  
+                       <a href="add-class.php">  
           <div class="widget-small primary coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
             <div class="info">
               <h4>Listed Package Type</h4>
@@ -77,7 +77,7 @@ if (strlen($_SESSION['adminid']==0)) {
 
         <div class="col-md-6 col-lg-6">
           <?php
-                  $sql="SELECT count(id) as totalpost FROM tbladdpackage;";
+                  $sql="SELECT count(id) as totalpost FROM product;";
                   $query= $dbh->prepare($sql);
                   $query-> execute();
                   $results = $query -> fetchAll(PDO::FETCH_OBJ);
@@ -88,10 +88,10 @@ if (strlen($_SESSION['adminid']==0)) {
                   {
                   ?>
 
-                   <a href="manage-post.php">  
+                   <a href="manage-product.php">  
           <div class="widget-small primary coloured-icon"><i class="icon fa fa-file fa-3x"></i>
             <div class="info">
-              <h4>Listed Packages</h4>
+              <h4>Listed Product</h4>
               <p><b><?php echo $result->totalpost;?></b></p>
             </div>
           </div>

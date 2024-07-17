@@ -72,7 +72,7 @@ if (strlen($_SESSION['adminid']) == 0) {
   <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
   <?php include 'include/sidebar.php'; ?>
   <main class="app-content">
-    <h3>Categories</h3>
+    <h3>Manage Classes</h3>
     <hr />
     <div class="row">
       <div class="col-md-6">
@@ -107,8 +107,8 @@ if (strlen($_SESSION['adminid']) == 0) {
             ?>
             <form method="post">
               <div class="form-group col-md-12">
-                <label class="control-label">Category Name</label>
-                <input class="form-control" name="category" id="category" type="text" placeholder="Enter Category" value="<?php echo htmlentities($categoryName); ?>">
+                <label class="control-label">Class Name</label>
+                <input class="form-control" name="category" id="category" type="text" placeholder="Enter Class" value="<?php echo htmlentities($categoryName); ?>">
                 <input type="hidden" name="categoryId" value="<?php echo $categoryId; ?>">
               </div>
               <div class="form-group col-md-4 align-self-end">

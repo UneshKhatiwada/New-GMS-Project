@@ -1,141 +1,340 @@
-<?php 
-session_start();
-error_reporting(0);
-include 'include/config.php';
-$uid=$_SESSION['uid'];
-
-if(isset($_POST['submit']))
-{ 
-$pid=$_POST['pid'];
-
-
-$sql="INSERT INTO tblbooking (package_id,userid) Values(:pid,:uid)";
-
-$query = $dbh -> prepare($sql);
-$query->bindParam(':pid',$pid,PDO::PARAM_STR);
-$query->bindParam(':uid',$uid,PDO::PARAM_STR);
-$query -> execute();
-echo "<script>alert('Package has been booked.');</script>";
-echo "<script>window.location.href='booking-history.php'</script>";
-
-}
-
-?>
-<!DOCTYPE html>
-<html lang="zxx">
-<head>
-	<title>Vyayamlaya</title>
-	<meta charset="UTF-8">
-	<meta name="description" content="Vyayamlaya">
-	<meta name="keywords" content="gym, html">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/nice-select.css"/>
-	<link rel="stylesheet" href="css/magnific-popup.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
-	<link rel="stylesheet" href="css/animate.css"/>
-
-	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="css/style.css"/>
-
-</head>
-<body>
-	<!-- Page Preloder -->
-	
-
-	<!-- Header Section -->
-	<?php include 'include/header.php';?>
-	<!-- Header Section end -->
-
-	
-
-	                                                                              
-	<!-- Page top Section -->
-	<section class="page-top-section set-bg" data-setbg="img/page-top-bg.jpg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-7 m-auto text-white">
-					<h2>Home</h2>
-					<p>Physical Activity Or Can Improve Your Health</p>
-				</div>
-			</div>
-		</div>
-	</section>
+<?php include('include/header.php') ?>
+<!-- Home Section -->
+<div class="d-flex  shadow mt-2 ">
+    <div class="container-fluid my-auto ">
+        <div class="row">
+            <div class="col-lg-6  my-auto ps-4 ">
+                <h1 class="display-1 fw-bold">Vyayamlaya</h1>
+                <p class=" display-6 fw-normal ">Shape Yourself!</p>
+                <p class="fw-light"> Unleash your potential and embark on a journey towards a stronger,fitter,
+                    <br> and more confident you. Sign up for 'Make Your Body Shape'now and witness
+                    <br> the incredible transformation your body is capable of!
+                </p>
+                <a href="" class="btn btn-primary" id="btn1">Join us</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="col-lg-11">
+                    <div class="card-body">
+                        <img src="img/fphoto.jpg" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<!-- About us section -->
+<section class="py-5" id="About">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 py-5 ">
+                <h2 class="fw-bold mb-3 ">About Vyayamlaya</h2>
+                <div class="pr-4">
+                    <p>Welcome to Vyayamlaya Gym Center, a haven for fitness enthusiasts nestled in the heart of
+                        Maitidevi, Kathmandu.
+                        At Vyayamlaya, we pride ourselves on offering more than just a place to work out;
+                        we provide a holistic approach to wellness that encompasses physical fitness, mental well-being,
+                        and spiritual rejuvenation.</p>
+                    <p>The architecture of Vyayamlaya blends modern aesthetics with traditional Nepali motifs,
+                        creating a unique ambiance that reflects the rich cultural heritage of the region.
+                        The entrance is adorned with intricate wood carvings and vibrant prayer flags,
+                        invoking a sense of tranquility and spirituality.
+                    </p>
+                    <p>
+                        Upon entering, you're greeted by the welcoming staff,
+                        who are not just fitness enthusiasts but also knowledgeable guides on the journey to a healthier
+                        lifestyle. The reception area exudes warmth with its earthy tones and comfortable seating,
+                        providing a space for members to unwind before and after their workouts.
+                    </p>
+                </div>
+                <a href="about-us.php" class="btn btn-primary " style="background:#428f9d; border:none;">Know More</a>
+            </div>
+            <div class="col-lg-6 custom-push-left" style="background: url(img/abtimg.png); background-size: cover;">
 
-	<!-- Pricing Section -->
-	<section class="pricing-section spad">
-		<div class="container">
-			<div class="section-title text-center">
-				<img src="img/icons/logo-icon.png" alt="">
-				<h2>Pricing plans</h2>
-				<p>Practice Yoga to perfect physical beauty, take care of your soul and enjoy life more fully!</p>
-			</div>
-			<div class="row">
-				        <?php 
+            </div>
+        </div>
+    </div>
+</section>
 
-$sql ="SELECT id, category, titlename, PackageType, PackageDuratiobn, Price, uploadphoto, Description, create_date from tbladdpackage";
-$query= $dbh -> prepare($sql);
-$query-> execute();
-$results = $query -> fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query -> rowCount() > 0)
-{
-foreach($results as $result)
-{
-?>
-				<div class="col-lg-3 col-sm-6">
-					<div class="pricing-item begginer">
-						<div class="pi-top">
-							<h4><?php echo $result->titlename;?></h4>
-						</div>
-						<div class="pi-price">
-							<h3><?php echo htmlentities($result->Price);?></h3>
-							<p>	<?php echo $result->PackageDuratiobn;?></p>
-						</div>
-						<ul>
-							<?php echo $result->Description;?>
-							
-						</ul>
-						<?php if(strlen($_SESSION['uid'])==0): ?>
-						<a href="login.php" class="site-btn sb-line-gradient">Booking Now</a>
-						<?php else :?>
-							<!-- <a href="#" class="site-btn sb-line-gradient">Booking Now</a> -->
-							 <form method='post'>
-                            <input type='hidden' name='pid' value='<?php echo htmlentities($result->id);?>'>
+<!-- Classes Section-->
+<section id="Classes" class="py-5 text-white " style="background:#4eaebf;">
+    <div class="text-center">
+        <h2 class="text-decoration-underline ">Our Classes</h2>
+        <p class="mb-5 text-white">Discover a diverse range of exhilarating classes at our gym designed to cater to all
+            fitness levels and interests.
+            <br>Whether you're a seasoned athlete or just starting your fitness journey, our classes offer something for
+            everyone.
+        </p>
+    </div>
+    <div class="container mt-5 ">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card">
+                    <div>
+                        <img src="img/cycl.jpeg" alt="" class="img-fluid rounded-top">
+                    </div>
+                    <div class="card-body">
+                        <b>Cardio & Dance Rhythms</b>
+                        <p class="card-text fw-bold ">
+                        <p class="fw-lighter"> Focus on improving cardiovascular fitness through
+                            dance-based workouts
+                            (e.g., Zumba, dance aerobics).</p>
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="background:#428f9d;border:none;" ><a href="registration.php" style="color:white; border-bottom:none;">Join Now</a></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div>
+                        <img src="img/cyoga.jpg" alt="" class="img-fluid rounded-top">
+                    </div>
+                    <div class="card-body">
+                        <b>Yoga and Meditation</b>
+                        <p class="card-text fw-bold ">
+                        <p class="fw-lighter">Focus on improving flexibility
+                            and mental well-being through a series of poses and breathing exercises.</p>
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="background:#428f9d;border:none;">Join Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div>
+                        <img src="img/strech.jpg" alt="" class="img-fluid rounded-top">
+                    </div>
+                    <div class="card-body">
+                        <b>Recovery and Stretching </b>
+                        <p class="card-text fw-bold ">
+                        <p class="fw-lighter"> Exercises to target specific muscle groups and improve
+                            strength and endurance and help to recover body.</p>
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="background:#428f9d;border:none;">Join Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div>
+                        <img src="img/strength.jpg" alt="" class="img-fluid rounded-top">
+                    </div>
+                    <div class="card-body">
+                        <b>Strength Training</b>
+                        <p class="card-text fw-bold ">
+                        <p class="fw-lighter">Aim to build muscular strength and bodyweight exercises, and functional
+                            movements and power buildup.</p>
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="background:#428f9d;border:none;">Join Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-                        <input class='site-btn sb-line-gradient' type='submit' name='submit' value='Booking Now' onclick="return confirm('Do you really want to book this package.');"> 
-                        </form> 
-							 <?php endif;?>
-					</div>
-				</div>
-				<?php  $cnt=$cnt+1; } } ?>
-			</div>
-		</div>
-	</section>
-	
+<!--Team Section-->
+<section class="py-5">
+    <div class="text-center">
+        <h2 class="text-decoration-underline text-dark fw-bold ">Our Team</h2>
+        <p class="mb-5 text-dark fw-lighter">Our team at Vyayamlaya is the backbone of the entire establishment,
+            embodying the values of dedication,expertise, and <br>passion for health and fitness.
+            Comprised of experienced trainers, knowledgeable staff, and dedicated professionals, <br>
+            Our team is committed to providing exceptional service and support to every member who walks
+            through the doors.</p>
+    </div>
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card">
+                    <div style="height: 261px;">
+                        <img src="img/bis.png" alt="" class="img-fluid h-100">
+                    </div>
+                    <div class="card-body">
+                        <b>Bishal Bishwokarma</b>
+                        <p class="card-text fw-bold ">
+                        <p class="fw-lighter">Group Fitness Instructor</p>
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="background:#428f9d;border:none;">Join Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div style="height: 261px;">
+                        <img src="img/nabb.png" alt="" class="img-fluid h-100">
+                    </div>
+                    <div class="card-body">
+                        <b>Nabin Pulami</b>
+                        <p class="card-text fw-bold ">
+                        <p class="fw-lighter">Personal Trainer</p>
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="background:#428f9d; border:none;">Join
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div style="height: 261px;">
+                        <img src="img/pasaas.png" alt="" class="img-fluid h-100">
+                    </div>
+                    <div class="card-body">
+                        <b>Ajay Shrestha</b>
+                        <p class="card-text fw-bold ">
+                        <p class="fw-lighter"> Fitness Trainer </p>
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="background:#428f9d; border:none;">Join
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card">
+                    <div style="height: 261px;">
+                        <img src="img/nik.png" alt="" class="img-fluid h-100">
+                    </div>
+                    <div class="card-body">
+                        <b>Nikhil Thapa</b>
+                        <p class="card-text fw-bold ">
+                        <p class="fw-lighter"> Nutritionists and Dietitians </p>
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="background:#428f9d; border:none;">Join
+                            Now</button>
+                    </div>
+                </div>
+            </div>
 
-	<!-- Footer Section -->
-	<?php include 'include/footer.php'; ?>
-	<!-- Footer Section end -->
+        </div>
+    </div>
+</section>
 
-	<div class="back-to-top"><img src="img/icons/up-arrow.png" alt=""></div>
+<!--Testimonials-->
+<section class="py-5 text-white " style="background:#4eaebf">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">What People Says</h2>
+        <p>These testimonials serve as a testament to our commitment to helpingindividuals achieve their fitness
+            <br>goals, and fostering a supportive environment for everyone who walks through our doors
+        </p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div class="shadow rounded position-relative">
+                    <div class="p-4 text-center">
+                        The trainers here customized a plan that balanced
+                        my work-life demands, and I've seen remarkable
+                        progress in my fitness journey.It's not just a gym;
+                        it's my sanctuary for self-care.
+                    </div>
+                    <i class=" fa fa-quote-left fa-3x position-absolute"
+                        style="top: 0.5rem; left: 0.5rem; opacity:0.2;"></i>
+                </div>
+                <div class="mt-n2 text-center">
+                    <img src="img/roman.jpg" alt="" class="rounded-circle border" width="100px" height="100px">
+                    <h4 class="mb-0 fw-bold">Roman Raut</h4>
+                    <p class="fw-light"> <i>Marketing Manager</i></p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="shadow rounded position-relative">
+                    <div class="p-4 text-center">
+                        The trainers' expertise and the gym's commitment to cleanliness
+                        during these times have made it a safe haven for me to maintain
+                        my health and de-stress...........................................
+                    </div>
+                    <i class="fa fa-quote-left fa-3x position-absolute"
+                        style="top: 0.5rem; left: 0.5rem; opacity:0.2;"></i>
+                </div>
+                <div class="mt-n2 text-center">
+                    <img src="img/pra.jpg" alt="" class="rounded-circle border" width="100px" height="100px">
+                    <h4 class="mb-0 fw-bold">Pratikshya Basyal</h4>
+                    <p class="fw-light"> <i>Registered Nurse</i></p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="shadow rounded position-relative">
+                    <div class="p-4 text-center">
+                        The variety of classes and the supportive community have kept me
+                        motivated. I've shed pounds, gained confidence, and found a new
+                        level of energy to inspire my students.
+                    </div>
+                    <i class="fa fa-quote-left fa-3x position-absolute"
+                        style="top: 0.5rem; left: 0.5rem; opacity:0.2;"></i>
+                </div>
+                <div class="mt-n2 text-center">
+                    <img src="img/rosh.jpg" alt="" class="rounded-circle border" width="100px" height="100px">
+                    <h4 class="mb-0 fw-bold">Roshan Balati</h4>
+                    <p class="fw-light"> <i>Teacher</i></p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="shadow rounded position-relative">
+                    <div class="p-4 text-center">
+                        This gym's 24/7 access has been a lifesaver. Whether it's a
+                        late-night workout or an early morning session, the convenience
+                        here is unbeatable............................................
+                        ............................................
+                    </div>
+                    <i class="fa fa-quote-left fa-3x position-absolute"
+                        style="top: 0.5rem; left: 0.5rem; opacity:0.2;"></i>
+                </div>
+                <div class="mt-n2 text-center">
+                    <img src="img/ashfaq.jpg" alt="" class="rounded-circle border" width="100px" height="100px">
+                    <h4 class="mb-0 fw-bold">Ashfaq Raza</h4>
+                    <p class="fw-light"> <i>Entrepreneur</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-	<!-- Search model end -->
+<!-- Footer-->
+<section id="contact" class="page contact">
+    <div class="container-fluid py-4">
+        <div class="row py-5 px-5 box">
+            <div class="col-md-3 box1">
+                <h5>VYAYAMLAYA</h5>
+                <p class="py-4">
+                    IT STARTS FROM YOU! MAKE A FIRST MOVE AND PROMISE YOURSELF:<br />"THAT'S IT, WATCH ME!"
+                </p>
+                <a href="" target="_blank" class="icon" title="Google"><i class="bi bi-google"></i></a>
+                <a href="" target="_blank" class="icon" title="Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="" target="_blank" class="icon" title="Instagram"><i class="bi bi-instagram"></i></a>
+                <a href="" target="_blank" class="icon" title="Whatsapp"><i class="bi bi-whatsapp"></i></a>
+            </div>
 
-	<!--====== Javascripts & Jquery ======-->
-	<script src="js/vendor/jquery-3.2.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.slicknav.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.nice-select.min.js"></script>
-	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/main.js"></script>
+            <div class="col-md-3 box1">
+                <h5 class="pb-4">OPENING HOURS</h5>
+                <p>Sunday to Friday :</p>
+                <p class="pb-2"><span>06:00 am - 11:00 pm</span></p>
+                <p>Sunday :</p>
+                <p><span>12:00 pm - 06:00 pm</span></p>
+                <p class="py-3"><span>Closed on Holidays</span></p>
+            </div>
 
-	</body>
-</html>
+            <div class="col-md-3 box1">
+                <h5 class="pb-4">HOME LOCATION</h5>
+                <p>Thapathali-10, Kathmandu, Nepal</p>
+                <p class="link pt-3">+977-9818268002</p>
+                <p class="link">info@vyayamlaya.com</p>
+            </div>
+
+            <div class="col-md-3 box1">
+                <div class="find-border">
+                    <h5 class="pb-4">FIND US</h5>
+                </div>
+                <div class="find-map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.797669039277!2d85.31501907453516!3d27.69264772614142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19b26c5a3df7%3A0xd49ea11f56ff8ac5!2z4KSP4KSt4KSw4KWH4KS34KWN4KSfIOCkleCksuClh-CknA!5e0!3m2!1sne!2snp!4v1719115677090!5m2!1sne!2snp"
+                        width="380" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<?php include('include/footer.php') ?>

@@ -97,8 +97,11 @@ if (isset($_POST['Submit'])) {
                 <select name="specialization" id="specialization" class="form-control" required>
                   <option value="">-- Select Specialization --</option>
                   <option value="1">Yoga</option>
-                  <option value="2">Pilates</option>
-                  <option value="3">CrossFit</option>
+                  <option value="2">Body Building</option>
+                  <option value="3">Weight Lifting</option>
+                  <option value="4">Cardio</option>
+                  <option value="5">Fitness Bootcamp</option>
+                  <option value="6">Zumba & Dance</option>
                   <!-- Add more options as needed -->
                 </select>
               </div>

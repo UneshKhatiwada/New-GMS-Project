@@ -59,26 +59,18 @@ echo "<script> window.location.href =profile.php;</script>";
 	
 
 	<!-- Header Section -->
-	<?php include 'include/header.php';?>
+	<?php include 'pricing_header.php';?>
 	<!-- Header Section end -->
 
 	
 	                                                                              
 	<!-- Page top Section -->
-	<section class="page-top-section set-bg" data-setbg="img/page-top-bg.jpg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-7 m-auto text-white">
-					<h2>Profile</h2>
-				</div>
-			</div>
-		</div>
-	</section>
+	
 	<!-- Page top Section end -->
 
 	<!-- Contact Section -->
 	<section class="contact-page-section spad overflow-hidden">
-		<div class="container">
+		<div class="container mb-8">
 			
 			<div class="row">
 				<div class="col-lg-2">
@@ -121,27 +113,18 @@ echo "<script> window.location.href =profile.php;</script>";
 								<input type="text" name="address" id="address" placeholder="Address" autocomplete="off" value="<?php echo $result->address;?>">
 							</div>
 							<div class="col-md-12">
-						<input type="submit" id="submit" name="submit" value="Update" class="site-btn sb-gradient">
+							<input type="submit" id="submit" name="submit" value="Update" class="btn btn-success" style="color:white; background-color:#428f9d;">
 								
 							</div>
 							<?php }} ?>
 						</div>
 					</form>
 				</div>
-				<div class="col-lg-2">
-				</div>
 			</div>
 		</div>
 	</section>
-	<!-- Trainers Section end -->
-<?php include 'include/footer.php'; ?>
-	<!-- Footer Section end -->
-	
-	<div class="back-to-top"><img src="img/icons/up-arrow.png" alt=""></div>
 
-	<!-- Search model -->
-	
-	<!-- Search model end -->
+<?php include 'include/footer.php'; ?>
 
 	<!--====== Javascripts & Jquery ======-->
 	<script src="js/vendor/jquery-3.2.1.min.js"></script>
