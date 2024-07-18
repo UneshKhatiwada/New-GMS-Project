@@ -50,7 +50,7 @@
                 </div>
                 <a href="about-us.php" class="btn btn-primary " style="background:#428f9d; border:none;">Know More</a>
             </div>
-            <div class="col-lg-6 custom-push-left" style="background: url(img/abtimg.png); background-size: cover;">
+            <div class="col-lg-6 custom-push-left" style="background: url(./img/abtimg.png); background-size: cover;">
 
             </div>
         </div>

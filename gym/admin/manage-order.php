@@ -2,7 +2,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
-include 'include/config.php';
+include '../include/config.php'; // Adjust the path if necessary
+require '../../vendor/autoload.php'; // Adjust the path to correctly point to autoload.php
+
+use Dompdf\Dompdf;
 
 if (strlen($_SESSION['adminid']) == 0) {
     header('location:logout.php');
@@ -42,6 +45,53 @@ try {
 } catch (PDOException $e) {
     $error = "Error fetching orders: " . $e->getMessage();
 }
+
+// Check if the export to PDF button was clicked
+if (isset($_POST['export_pdf'])) {
+    $html = '<h3>Orders List</h3>';
+    $html .= '<table border="1" cellspacing="0" cellpadding="5">';
+    $html .= '<thead>';
+    $html .= '<tr>';
+    $html .= '<th>ID</th>';
+    $html .= '<th>Invoice No</th>';
+    $html .= '<th>Product ID</th>';
+    $html .= '<th>Total</th>';
+    $html .= '<th>Status</th>';
+    $html .= '<th>Created At</th>';
+    $html .= '<th>User Name</th>';
+    $html .= '</tr>';
+    $html .= '</thead>';
+    $html .= '<tbody>';
+
+    foreach ($orders as $order) {
+        $html .= '<tr>';
+        $html .= '<td>' . htmlentities($order->id) . '</td>';
+        $html .= '<td>' . htmlentities($order->invoice_no) . '</td>';
+        $html .= '<td>' . htmlentities($order->product_id) . '</td>';
+        $html .= '<td>' . htmlentities($order->total) . '</td>';
+        $html .= '<td>' . htmlentities($order->status) . '</td>';
+        $html .= '<td>' . htmlentities($order->created_at) . '</td>';
+        $html .= '<td>' . htmlentities($order->fname . ' ' . $order->lname) . '</td>';
+        $html .= '</tr>';
+    }
+
+    $html .= '</tbody>';
+    $html .= '</table>';
+
+    // Initialize Dompdf
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+
+    // Set paper size and orientation
+    $dompdf->setPaper('A4', 'landscape');
+
+    // Render the HTML as PDF
+    $dompdf->render();
+
+    // Output the generated PDF (1 = download and 0 = preview)
+    $dompdf->stream("orders.pdf", array("Attachment" => 0));
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +122,10 @@ try {
                         <?php echo htmlentities($msg); ?>
                     </div>
                 <?php endif; ?>
+                <hr>
+                <form method="post">
+                    <button type="submit" name="export_pdf" class="btn btn-primary">Export to PDF</button>
+                </form>
                 <hr>
                 <table class="table table-hover table-bordered" id="sampleTable">
                     <thead>
