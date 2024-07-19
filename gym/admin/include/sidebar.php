@@ -43,18 +43,6 @@
     </li>
 
 
-    <!--<li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Booking</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-      <ul class="treeview-menu">
-        <li><a class="treeview-item" href="payment.php"><i class="icon fa fa-circle-o"></i>Add Payment</a></li>
-        <li><a class="treeview-item" href="new-bookings.php"><i class="icon fa fa-circle-o"></i>New</a></li>
-        <li><a class="treeview-item" href="partial-payment-bookings.php"><i class="icon fa fa-circle-o"></i> Partial Payment </a></li>
-        <li><a class="treeview-item" href="full-payment-bookings.php"><i class="icon fa fa-circle-o"></i> Full Payment </a></li>
-        <li><a class="treeview-item" href="booking-history.php"><i class="icon fa fa-circle-o"></i> All</a></li>
-      </ul>
-    </li>
--->
-
-
 
 
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Report</span><i class="treeview-indicator fa fa-angle-right"></i></a>
@@ -65,3 +53,5 @@
     </li>
   </ul>
 </aside>
+
+

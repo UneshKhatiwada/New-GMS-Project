@@ -28,6 +28,6 @@ if (isset($_GET['delete_id'])) {
 }
 
 // Redirect back to manage-products.php after deletion
-header("Location: manage-products.php");
+header("Location: manage-product.php");
 exit();
 ?>
