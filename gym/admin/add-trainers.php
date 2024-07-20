@@ -1,129 +1,127 @@
-<?php 
+<?php
 session_start();
-error_reporting(0);
-include 'include/config.php'; 
+error_reporting(E_ALL); // Enable error reporting for debugging
+ini_set('display_errors', 1);
 
+include 'include/config.php';
+
+$msg = ''; // Initialize $msg variable
+$errormsg = ''; // Initialize $errormsg variable
+
+// Check if admin is logged in
 if (strlen($_SESSION['adminid']) == 0) {
-  header('location:logout.php');
-  exit();
-}
+    header('location:logout.php');
+    exit; // Ensure the script stops executing after redirect
+} else {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['action']) && $_POST['action'] == 'insert') {
+            $name = $_POST['name'];
+            $specialization = $_POST['specialization'];
 
-$msg = "";
-$errormsg = "";
+            // Handle file upload
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES['image']['tmp_name'];
+                $fileName = $_FILES['image']['name'];
+                $fileSize = $_FILES['image']['size'];
+                $fileType = $_FILES['image']['type'];
+                $fileNameCmps = explode(".", $fileName);
+                $fileExtension = strtolower(end($fileNameCmps));
 
-if (isset($_POST['Submit'])) {
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  $phone = $_POST['phone'];
-  $specialization = $_POST['specialization'];
-  $experience = $_POST['experience'];
+                // Define allowed file extensions
+                $allowedfileExtensions = array('jpg', 'jpeg', 'png', 'gif');
+                if (in_array($fileExtension, $allowedfileExtensions)) {
+                    // Set the new file name
+                    $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                    $uploadFileDir = './uploads/';
+                    $dest_path = $uploadFileDir . $newFileName;
 
-  $sql = "INSERT INTO trainers (name, email, phone, specialization, experience) 
-          VALUES (:name, :email, :phone, :specialization, :experience)";
-  $query = $dbh->prepare($sql);
-  $query->bindParam(':name', $name, PDO::PARAM_STR);
-  $query->bindParam(':email', $email, PDO::PARAM_STR);
-  $query->bindParam(':phone', $phone, PDO::PARAM_STR);
-  $query->bindParam(':specialization', $specialization, PDO::PARAM_INT);
-  $query->bindParam(':experience', $experience, PDO::PARAM_INT);
+                    if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                        $msg = "File is successfully uploaded.";
+                    } else {
+                        $errormsg = "There was an error moving the file to the upload directory.";
+                    }
+                } else {
+                    $errormsg = "Upload failed. Allowed file types: jpg, jpeg, png, gif.";
+                }
+            } else {
+                $errormsg = "No file uploaded or there was an upload error.";
+            }
 
-  if ($query->execute()) {
-    $msg = "Trainer Added Successfully";
-    echo "<script>alert('Trainer Added successfully.');</script>";
-    echo "<script> window.location.href='manage-trainers.php';</script>";
-    exit();
-  } else {
-    $errormsg = "Failed to add trainer";
-  }
-}
+            // Insert data into the database
+            $sql = "INSERT INTO trainers (name, specialization, image) 
+                    VALUES (:name, :specialization, :image)";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':name', $name, PDO::PARAM_STR);
+            $query->bindParam(':specialization', $specialization, PDO::PARAM_STR);
+            $query->bindParam(':image', $newFileName, PDO::PARAM_STR);
+
+            if ($query->execute()) {
+                $msg = "Trainer Added Successfully";
+            } else {
+                $errormsg = "Error adding trainer.";
+            }
+        }
+    }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="description" content="Vali is a">
-  <title>Admin | Add Trainer</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Main CSS-->
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-  <!-- Font-icon css-->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Trainers</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="app sidebar-mini rtl">
-  <!-- Navbar-->
-  <?php include 'include/header.php'; ?>
-  <!-- Sidebar menu-->
-  <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-  <?php include 'include/sidebar.php'; ?>
-  <main class="app-content">
-    <h3>Add Trainer</h3>
-    <hr/>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="tile">
-          <!-- Success and Error Messages -->
-          <?php if ($msg) { ?>
-          <div class="alert alert-success" role="alert">
-            <strong>Success!</strong> <?php echo htmlentities($msg); ?>
-          </div>
-          <?php } ?>
-          <?php if ($errormsg) { ?>
-          <div class="alert alert-danger" role="alert">
-            <strong>Error!</strong> <?php echo htmlentities($errormsg); ?>
-          </div>
-          <?php } ?>
+    <?php include 'include/header.php'; ?>
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <?php include 'include/sidebar.php'; ?>
+    <main class="app-content">
+        <h3>Trainers</h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="tile">
+                    <?php if ($msg) { ?>
+                    <div class="alert alert-success" role="alert">
+                        <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
+                    </div>
+                    <?php } ?>
 
-          <div class="tile-body">
-            <form class="row" method="post">
-              <div class="form-group col-md-12">
-                <label class="control-label">Name</label>
-                <input class="form-control" name="name" id="name" type="text" placeholder="Enter Trainer Name" required>
-              </div>
+                    <?php if ($errormsg) { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Oh snap!</strong> <?php echo htmlentities($errormsg); ?>
+                    </div>
+                    <?php } ?>
 
-              <div class="form-group col-md-12">
-                <label class="control-label">Email</label>
-                <input class="form-control" name="email" id="email" type="email" placeholder="Enter Trainer Email" required>
-              </div>
-
-              <div class="form-group col-md-12">
-                <label class="control-label">Phone</label>
-                <input class="form-control" name="phone" id="phone" type="text" placeholder="Enter Trainer Phone">
-              </div>
-
-              <div class="form-group col-md-12">
-                <label class="control-label">Specialization</label>
-                <select name="specialization" id="specialization" class="form-control" required>
-                  <option value="">-- Select Specialization --</option>
-                  <option value="1">Yoga</option>
-                  <option value="2">Body Building</option>
-                  <option value="3">Weight Lifting</option>
-                  <option value="4">Cardio</option>
-                  <option value="5">Fitness Bootcamp</option>
-                  <option value="6">Zumba & Dance</option>
-                  <!-- Add more options as needed -->
-                </select>
-              </div>
-
-              <div class="form-group col-md-12">
-                <label class="control-label">Experience</label>
-                <input class="form-control" name="experience" id="experience" type="number" placeholder="Enter Trainer Experience">
-              </div>
-
-              <div class="form-group col-md-4 align-self-end">
-                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Submit">
-              </div>
-            </form>
-          </div>
+                    <div class="tile-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="insert">
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Name</label>
+                                <input class="form-control" name="name" type="text" placeholder="Enter Name" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Specialization</label>
+                                <input class="form-control" name="specialization" type="text" placeholder="Enter Specialization" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Image</label>
+                                <input class="form-control" name="image" type="file" required>
+                            </div>
+                            <div class="form-group col-md-4 align-self-end">
+                                <input type="submit" name="submit" id="submit" class="btn btn-primary" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </main>
-  <!-- Essential javascripts for application to work-->
-  <script src="js/jquery-3.2.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
+    </main>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
+<?php } ?>
