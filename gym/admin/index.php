@@ -38,18 +38,18 @@ if (strlen($_SESSION['adminid']==0)) {
           
         <div class="col-md-6 col-lg-6">
           <?php
-                  $sql="SELECT count(id) as totalcat FROM tblcategory;";
+                  $sql="SELECT count(id) as totaluser FROM tbluser;";
                   $query= $dbh->prepare($sql);
                   $query-> execute();
                   $results = $query -> fetchAll(PDO::FETCH_OBJ);
                   foreach($results as $result)
                   {
                   ?>
-                       <a href="add-category.php">  
+                       <a href="manage-users.php">  
           <div class="widget-small info coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
             <div class="info">
-              <h4>Listed Categories</h4>
-              <p><b><?php echo $result->totalcat;?></b></p>
+              <h4>Registered Users</h4>
+              <p><b><?php echo $result->totaluser;?></b></p>
             </div>
           </div></a>
             <?php  } ?>
@@ -57,18 +57,18 @@ if (strlen($_SESSION['adminid']==0)) {
 
   <div class="col-md-6 col-lg-6">
           <?php
-                  $sql="SELECT count(id) as totalpackagetype FROM tblcategory;";
+                  $sql="SELECT count(id) as totalorder FROM orders;";
                   $query= $dbh->prepare($sql);
                   $query-> execute();
                   $results = $query -> fetchAll(PDO::FETCH_OBJ);
                   foreach($results as $result)
                   {
                   ?>
-                       <a href="add-class.php">  
-          <div class="widget-small primary coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+                       <a href="manage-order.php">  
+                       <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x "></i>
             <div class="info">
-              <h4>Listed Package Type</h4>
-              <p><b><?php echo $result->totalpackagetype;?></b></p>
+              <h4>Total Membership</h4>
+              <p><b><?php echo $result->totalorder;?></b></p>
             </div>
           </div></a>
             <?php  } ?>
@@ -77,7 +77,7 @@ if (strlen($_SESSION['adminid']==0)) {
 
         <div class="col-md-6 col-lg-6">
           <?php
-                  $sql="SELECT count(id) as totalpost FROM product;";
+                  $sql="SELECT count(id) as totaltrainer FROM trainers;";
                   $query= $dbh->prepare($sql);
                   $query-> execute();
                   $results = $query -> fetchAll(PDO::FETCH_OBJ);
@@ -88,11 +88,11 @@ if (strlen($_SESSION['adminid']==0)) {
                   {
                   ?>
 
-                   <a href="manage-product.php">  
-          <div class="widget-small primary coloured-icon"><i class="icon fa fa-file fa-3x"></i>
+                   <a href="manage-trainers.php">  
+                   <div class="widget-small danger coloured-icon"><i class="icon fa fa-user fa-3x"></i>
             <div class="info">
-              <h4>Listed Product</h4>
-              <p><b><?php echo $result->totalpost;?></b></p>
+              <h4>Total Trainer</h4>
+              <p><b><?php echo $result->totaltrainer;?></b></p>
             </div>
           </div>
         </a>
@@ -102,18 +102,18 @@ if (strlen($_SESSION['adminid']==0)) {
 
         <div class="col-md-6 col-lg-6">
           <?php
-                  $sql="SELECT count(id) as totalbookings FROM tblbooking;";
+                  $sql="SELECT count(id) as totalclass FROM tblclasses;";
                   $query= $dbh->prepare($sql);
                   $query-> execute();
                   $results = $query -> fetchAll(PDO::FETCH_OBJ);
                   foreach($results as $result)
                   {
                   ?>
-                  <a href="booking-history.php"> 
-          <div class="widget-small info coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+                  <a href="manage-class.php"> 
+          <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"></i>
             <div class="info">
-              <h4>Total Bookings</h4>
-              <p><b><?php echo $result->totalbookings;?></b></p>
+              <h4>Total Classes</h4>
+              <p><b><?php echo $result->totalclass;?></b></p>
             </div>
           </div>
         </a>
@@ -122,60 +122,18 @@ if (strlen($_SESSION['adminid']==0)) {
 
     <div class="col-md-6 col-lg-6">
           <?php
-                  $sql="SELECT count(id) as totalbookings FROM tblbooking where  paymentType is null or paymentType=''";
+                  $sql="SELECT count(id) as totalproduct FROM products";
                   $query= $dbh->prepare($sql);
                   $query-> execute();
                   $results = $query -> fetchAll(PDO::FETCH_OBJ);
                   foreach($results as $result)
                   {
                   ?>
-                  <a href="new-bookings.php"> 
-          <div class="widget-small danger coloured-icon"><i class="icon fa fa-user fa-3x"></i>
+                  <a href="manage-product.php"> 
+                  <div class="widget-small primary coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
             <div class="info">
-              <h4>New Bookings</h4>
-              <p><b><?php echo $result->totalbookings;?></b></p>
-            </div>
-          </div>
-        </a>
-            <?php  } ?>
-        </div>
-
-
-    <div class="col-md-6 col-lg-6">
-          <?php
-                  $sql="SELECT count(id) as totalbookings FROM tblbooking where paymentType='Partial Payment'";
-                  $query= $dbh->prepare($sql);
-                  $query-> execute();
-                  $results = $query -> fetchAll(PDO::FETCH_OBJ);
-                  foreach($results as $result)
-                  {
-                  ?>
-                  <a href="partial-payment-bookings.php"> 
-          <div class="widget-small warning coloured-icon"><i class="icon fa fa-user fa-3x"></i>
-            <div class="info">
-              <h4>Partial Payment Bookings</h4>
-              <p><b><?php echo $result->totalbookings;?></b></p>
-            </div>
-          </div>
-        </a>
-            <?php  } ?>
-        </div>
-
-
-         <div class="col-md-6 col-lg-6">
-          <?php
-                  $sql="SELECT count(id) as totalbookings FROM tblbooking where paymentType='Full Payment'";
-                  $query= $dbh->prepare($sql);
-                  $query-> execute();
-                  $results = $query -> fetchAll(PDO::FETCH_OBJ);
-                  foreach($results as $result)
-                  {
-                  ?>
-                  <a href="full-payment-bookings.php"> 
-          <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"></i>
-            <div class="info">
-              <h4>Full Payment Bookings</h4>
-              <p><b><?php echo $result->totalbookings;?></b></p>
+              <h4>Total Packages</h4>
+              <p><b><?php echo $result->totalproduct;?></b></p>
             </div>
           </div>
         </a>

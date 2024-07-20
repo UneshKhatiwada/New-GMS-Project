@@ -103,7 +103,7 @@
             while ($class = mysqli_fetch_assoc($result)) { ?>
                 <div class="col-lg-3">
                     <div class="card">
-                        <div class="image-container">
+                        <div class=>
                         <img src="./admin/uploads/<?php echo htmlentities($class['image']); ?>" alt="" class="img-thumbnail">
                         </div>
                         <div class="card-body">
@@ -154,7 +154,6 @@
         </div>
     </div>
 </section>
-
 
 <!-- Testimonials -->
 <section class="py-5 text-white " style="background:#4eaebf">
