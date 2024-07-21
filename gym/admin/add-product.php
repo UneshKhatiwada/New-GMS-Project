@@ -50,7 +50,7 @@ if (strlen($_SESSION['adminid']) == 0) {
   <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
   <?php include 'include/sidebar.php'; ?>
   <main class="app-content">
-    <h3>Products</h3>
+    <h3>Add Packages</h3>
     <hr />
     <div class="row">
       <div class="col-md-6">

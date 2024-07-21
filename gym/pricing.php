@@ -14,7 +14,7 @@ $result = mysqli_query($conn, $sql);
 	<body>
 			<!-- Header Section -->
 	<?php include 'pricing_header.php';?>
-		<div class="container" >
+		<div class="container mb-8" >
 			<div class="pt-md-5">
 				<div class="row">
 					

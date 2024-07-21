@@ -14,54 +14,7 @@ if( isset($_REQUEST['oid']) &&
 		if( mysqli_num_rows($result) == 1)
 		{
 			$order = mysqli_fetch_assoc( $result);
-			$url = "https://uat.esewa.com.np/epay/transrec
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			";
+			$url = "https://uat.esewa.com.np/epay/transrec";
 		
 			$data =[
 			'amt'=> $order['total'],

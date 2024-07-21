@@ -151,7 +151,7 @@ if (isset($_POST['export_pdf'])) {
                                 <td><?php echo htmlentities($order->created_at); ?></td>
                                 <td><?php echo htmlentities($order->fname . ' ' . $order->lname); ?></td>
                                 <td>
-                                    <a href="manage-orders.php?delete_id=<?php echo $order->id; ?>" onclick="return confirm('Are you sure you want to delete this order?');" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="manage-order.php?delete_id=<?php echo $order->id; ?>" onclick="return confirm('Are you sure you want to delete this order?');" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

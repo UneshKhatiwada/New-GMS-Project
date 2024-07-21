@@ -129,7 +129,7 @@ $auth_url = $client->createAuthUrl();
 
                 <!-- Google Login Button -->
 
-                <a href="<?php echo $auth_url; ?>" class="btn btn-outline-danger btn-block">
+                <a href="<?php echo $auth_url; ?>" class="btn btn-outline-danger btn-danger text-white">
                     <i class="fab fa-google"></i> Login with Google
                 </a>
             </div>

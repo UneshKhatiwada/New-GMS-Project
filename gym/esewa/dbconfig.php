@@ -1,5 +1,5 @@
 <?php
-$host = 'localhost';
+$host = "localhost";
 $db = 'gymdb';
 $user = 'root'; // Your database user
 $password =''; // Your Database password

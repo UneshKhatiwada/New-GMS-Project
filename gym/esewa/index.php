@@ -12,16 +12,14 @@ $result = mysqli_query($conn, $sql);
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 	</head>
 	<body>
-			<!-- Header Section -->
-	<?php include 'include/header.php';?>
 		<div class="container">
 			<div class="pt-md-5">
 				<div class="row">
 					
 					<?php while( $product = mysqli_fetch_assoc($result)) {?>
 					<div class="col-md-4">
-						<div class="card" style="width: 18rem;">
-							<div class="imagecontainer" style="height: 150px;">
+						<div class="card" stylea="width: 18rem;">
+							<div class="imagecontainer" style="height: 400px;">
 								<img src="image/<?php echo $product['image']?>" class="card-img-top" alt="..." style="width: 100%; height: 100%;">
 							</div>
 							<div class="card-body">
@@ -42,6 +40,4 @@ $result = mysqli_query($conn, $sql);
 			</div>
 		</div>
 	</body>
-		<!-- Footer Section -->
-		<?php include 'include/footer.php'; ?>
 </html>

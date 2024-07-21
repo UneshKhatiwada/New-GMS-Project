@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2024 at 05:34 AM
+-- Generation Time: Jul 21, 2024 at 01:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,13 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `invoice_no`, `product_id`, `total`, `status`, `created_at`, `updated_at`, `user_id`) VALUES
-(8, '11720010513', 1, 100, 0, '2024-07-03 08:56:53', NULL, 0);
+(8, '11720010513', 1, 100, 0, '2024-07-03 08:56:53', NULL, 0),
+(9, '11721215755', 1, 100, 0, '2024-07-17 07:44:15', NULL, 0),
+(10, '11721523806', 1, 100, 0, '2024-07-20 21:18:26', NULL, 0),
+(11, '11721524000', 1, 100, 0, '2024-07-20 21:21:40', NULL, 0),
+(12, '31721524209', 3, 200, 0, '2024-07-20 21:25:09', NULL, 0),
+(13, '11721532089', 1, 100, 0, '2024-07-20 23:36:29', NULL, 0),
+(14, '21721532680', 2, 150, 0, '2024-07-20 23:46:20', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -66,32 +72,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `title`, `description`, `image`, `amount`) VALUES
 (1, 'Student', 'With an Everyone Active student gym membership, you get to use our gyms just about whenever you want.', 'p1.jpeg', 100),
 (2, 'Regular', 'Standard gym equipment includes dumbbells, weight machines, kettlebells, squat racks, and cardio equipment', 'p2.jpeg', 150),
-(3, 'Pro', 'Exercise involves engaging in physical activity and increasing the heart rate beyond resting levels. It is an important part of preserving physical and mental health.', 'p3.jpeg', 200),
-(4, 'Exclusive', 'A high end gym sets itself apart from a regular gym by offering top-of-the-line equipment, personalized services, and luxurious amenities', 'Fphoto.jpg', 2000);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbladdpackage`
---
-
-CREATE TABLE `tbladdpackage` (
-  `id` int(11) NOT NULL,
-  `category` varchar(45) DEFAULT NULL,
-  `titlename` varchar(450) DEFAULT NULL,
-  `PackageType` varchar(45) DEFAULT NULL,
-  `Packageduration` varchar(45) DEFAULT NULL,
-  `Price` varchar(45) DEFAULT NULL,
-  `Description` varchar(450) DEFAULT NULL,
-  `create_date` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbladdpackage`
---
-
-INSERT INTO `tbladdpackage` (`id`, `category`, `titlename`, `PackageType`, `Packageduration`, `Price`, `Description`, `create_date`) VALUES
-(12, '8', 'Body Building', '30', '12 months', '12000', 'Bulk Your Muscles', '2024-06-20 01:37:37');
+(3, 'Pro', 'Exercise involves engaging in physical activity and increasing the heart rate levels. It is an important part of\r\nphysical and mental health.', 'p3.jpeg', 200);
 
 -- --------------------------------------------------------
 
@@ -118,98 +99,26 @@ INSERT INTO `tbladmin` (`id`, `name`, `email`, `mobile`, `password`, `create_dat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblbooking`
+-- Table structure for table `tblclasses`
 --
 
-CREATE TABLE `tblbooking` (
+CREATE TABLE `tblclasses` (
   `id` int(11) NOT NULL,
-  `package_id` varchar(45) DEFAULT NULL,
-  `userid` varchar(45) DEFAULT NULL,
-  `booking_date` timestamp NULL DEFAULT current_timestamp(),
-  `payment` varchar(45) DEFAULT NULL,
-  `paymentType` varchar(45) DEFAULT NULL
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tblbooking`
+-- Dumping data for table `tblclasses`
 --
 
-INSERT INTO `tblbooking` (`id`, `package_id`, `userid`, `booking_date`, `payment`, `paymentType`) VALUES
-(9, '7', '7', '2024-06-11 18:15:00', '5000', 'Cash'),
-(10, '7', '7', '2024-06-11 18:15:00', '5000', 'Cash'),
-(11, '1', '1', '2024-06-03 18:15:00', '5000', 'Cash');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblcategory`
---
-
-CREATE TABLE `tblcategory` (
-  `id` int(11) NOT NULL,
-  `category_name` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tblcategory`
---
-
-INSERT INTO `tblcategory` (`id`, `category_name`, `status`) VALUES
-(8, 'Body Building', '0'),
-(9, 'Yoga', '0'),
-(10, 'Weight Lifting', '0'),
-(11, 'Cardio', '0'),
-(12, 'Fitness Bootcamp', '0'),
-(13, 'Zumba & Dance', '0');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblpackage`
---
-
-CREATE TABLE `tblpackage` (
-  `id` int(11) NOT NULL,
-  `cate_id` varchar(45) DEFAULT NULL,
-  `PackageName` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tblpackage`
---
-
-INSERT INTO `tblpackage` (`id`, `cate_id`, `PackageName`) VALUES
-(14, '5', 'Silver'),
-(15, '5', 'Gold'),
-(16, '6', 'Gold'),
-(17, '5', 'Diamond'),
-(22, '13', 'Diamond'),
-(24, '11', 'Gold'),
-(25, '11', 'Silver'),
-(26, '11', 'Diamond'),
-(27, '12', 'Silver'),
-(28, '12', 'Gold'),
-(29, '8', 'Silver'),
-(30, '8', 'Diamond'),
-(31, '9', 'Gold'),
-(32, '13', 'Diamond'),
-(35, '8', 'Gold'),
-(36, '9', 'Silver');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblpayment`
---
-
-CREATE TABLE `tblpayment` (
-  `id` int(11) NOT NULL,
-  `bookingID` varchar(45) DEFAULT NULL,
-  `paymentType` varchar(45) DEFAULT NULL,
-  `payment` varchar(45) DEFAULT NULL,
-  `payment_date` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `tblclasses` (`id`, `title`, `description`, `image`, `created_at`) VALUES
+(1, 'Cardio & Zumba', ' Great cardio workout that melts fat, strengthens your core, and improves flexibility.', 'cycl.jpeg', '2024-07-20 11:58:34'),
+(2, 'Body Building', 'Bodybuilding is the practice of progressive resistance exercise to build, control, and develop one\'s muscles ', 'strength.jpg', '2024-07-20 12:18:29'),
+(3, 'Yoga', 'Yoga is a practice that combines physical postures, breathing exercises, and meditation to enhance flexibility.', 'cyoga.jpg', '2024-07-20 13:31:48'),
+(4, 'Kickboxing', 'Kickboxing combines martial arts techniques with cardiovascular exercise , kicking and punching. ', '906fcacef29da764a04af3e79eca0b3b.jpg', '2024-07-20 13:33:12');
 
 -- --------------------------------------------------------
 
@@ -240,7 +149,8 @@ INSERT INTO `tbluser` (`id`, `fname`, `lname`, `email`, `mobile`, `password`, `s
 (9, 'Unesh', 'Khatiwada', 'aa@gmail.com', '9843769772', '283f42764da6dba2522412916b031080', 'maitidevi', 'ktm', NULL, '2024-06-20 12:11:56'),
 (10, 'Aaaa', 'Bbbb', 'abc@gmail.com', '9876546732', '00b7691d86d96aebd21dd9e138f90840', 'state 4', 'pokhara', NULL, '2024-06-20 12:22:43'),
 (11, 'nabin', 'pulami', 'na@gmail.com', '9848989897', '202cb962ac59075b964b07152d234b70', 'state2', 'kathmandu', '', '2024-06-24 04:37:21'),
-(12, 'ram', 'bahadur', 'ram@gmail.com', '9811112222', '00b7691d86d96aebd21dd9e138f90840', 'State 4', 'Pokhara', NULL, '2024-06-27 10:12:03');
+(12, 'ram', 'bahadur', 'ram@gmail.com', '9811112222', '00b7691d86d96aebd21dd9e138f90840', 'State 4', 'Pokhara', NULL, '2024-06-27 10:12:03'),
+(13, 'dileep', 'kushwaha', 'dileepkushwaha2222@gmail.com', '9861174461', '81dc9bdb52d04dc20036dbd8313ed055', 'bagmati', 'kathmandu', NULL, '2024-07-21 01:09:43');
 
 -- --------------------------------------------------------
 
@@ -251,18 +161,19 @@ INSERT INTO `tbluser` (`id`, `fname`, `lname`, `email`, `mobile`, `password`, `s
 CREATE TABLE `trainers` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(100) NOT NULL,
   `specialization` varchar(100) NOT NULL,
-  `experience` varchar(100) NOT NULL
+  `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `trainers`
 --
 
-INSERT INTO `trainers` (`id`, `name`, `email`, `phone`, `specialization`, `experience`) VALUES
-(1, 'Subarna khatiwada', 'sub@gmail.com', '9863993128', 'Cardio', '5');
+INSERT INTO `trainers` (`id`, `name`, `specialization`, `image`) VALUES
+(3, 'Bishal', 'Zumba & Cardio', '97d21acf2f5d7ebaaaf84cad4386e134.png'),
+(4, 'Nikhil', 'Strength Coach', 'dda160441bac1dadc5a9b929744ed337.png'),
+(5, 'Ajay', ' Kickboxing Expert', 'b1a2b320c3b34119b0af28bbc885932c.png'),
+(6, 'Nabin', 'Recovery Specialist', '5851d0df73d5cc0739be0c3057d1fe59.png');
 
 --
 -- Indexes for dumped tables
@@ -283,39 +194,15 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbladdpackage`
---
-ALTER TABLE `tbladdpackage`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `tbladmin`
 --
 ALTER TABLE `tbladmin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tblbooking`
+-- Indexes for table `tblclasses`
 --
-ALTER TABLE `tblbooking`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tblcategory`
---
-ALTER TABLE `tblcategory`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tblpackage`
---
-ALTER TABLE `tblpackage`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tblpayment`
---
-ALTER TABLE `tblpayment`
+ALTER TABLE `tblclasses`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -338,7 +225,7 @@ ALTER TABLE `trainers`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -347,52 +234,28 @@ ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `tbladdpackage`
---
-ALTER TABLE `tbladdpackage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
 -- AUTO_INCREMENT for table `tbladmin`
 --
 ALTER TABLE `tbladmin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tblbooking`
+-- AUTO_INCREMENT for table `tblclasses`
 --
-ALTER TABLE `tblbooking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `tblcategory`
---
-ALTER TABLE `tblcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `tblpackage`
---
-ALTER TABLE `tblpackage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
---
--- AUTO_INCREMENT for table `tblpayment`
---
-ALTER TABLE `tblpayment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `tblclasses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbluser`
 --
 ALTER TABLE `tbluser`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `trainers`
 --
 ALTER TABLE `trainers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
