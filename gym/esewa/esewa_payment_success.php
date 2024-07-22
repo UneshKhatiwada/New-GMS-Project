@@ -34,7 +34,7 @@ if( isset($_REQUEST['oid']) &&
 			{
 				$sql = "UPDATE orders SET status=1 WHERE id='".$order['id']."'";
 				mysqli_query($conn, $sql);
-				//echo 'Thank you for purchasing with us. Your payment has been successfully.';
+	
 				header('Location: success.php');
 			}
 	

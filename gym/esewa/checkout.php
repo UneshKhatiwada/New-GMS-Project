@@ -69,8 +69,8 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST')
 										<input type="hidden" name="pdc" value="0">
 										<input value="epay_payment" name="scd" type="hidden">
 										<input type="hidden" name="pid" value="<?php echo $invoice_no;?>"  >
-										<input value="http://localhost/FINAL-GYM/gym/esewa/esewa_payment_success.php" type="hidden" name="su">
-										<input value="http://localhost/FINAL-GYM/gym/esewa/esewa_payment_failed.php" type="hidden" name="fu">
+										<input value="http://localhost/GMS/gym/esewa/esewa_payment_success.php" type="hidden" name="su">
+										<input value="http://localhost/GMS/gym/esewa/esewa_payment_failed.php" type="hidden" name="fu">
 										<div class="text-center " >
 										<button  type="submit" class="btn btn-success" style="color: white; border: none; padding: 10px 20px; cursor: pointer;">eSewa</button>
 										</div>
